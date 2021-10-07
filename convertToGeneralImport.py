@@ -68,8 +68,8 @@ with open('.\Output\generalImportTemplateUsNews.csv', 'w', newline='') as genera
                         'Entry_year': entryYear, 
                         #'event_code', 
                         #'interaction_id', 
-                        'source': 'Referral: US News',
-                        'lead_source': 'Referral: US News',
+                        'source': 'Ref_USNews',
+                        'lead_source': 'Ref_USNews',
                         'last_data_input_source': 'Referral: US News', 
                         #'RecordType'
                         })
