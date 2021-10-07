@@ -1,0 +1,31 @@
+--this expression takes the informatica system date, breaks it into parts, and assembes it into the format that the University Database wants as a string, then converts it back to a date.
+TO_DATE(
+	CONCAT(
+		CONCAT(
+			CONCAT(
+				TO_CHAR(
+					GET_DATE_PART(
+						SYSDATE, 
+						'MM'
+					)
+				),
+			'/'
+			),
+			CONCAT(
+				TO_CHAR(
+					GET_DATE_PART(
+						SYSDATE, 
+						'DD'
+					)
+				),
+			'/')
+			),
+		TO_CHAR(
+			GET_DATE_PART(
+				SYSDATE, 
+				'YYYY'
+			)
+		)
+	),
+	'MM/DD/YYYY'
+)
