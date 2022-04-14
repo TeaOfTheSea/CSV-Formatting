@@ -114,17 +114,13 @@ def main():
                                 "City": unidecode(dataAsArray[i][2]), 
                                 "State": unidecode(dataAsArray[i][7]), 
                                 "Country": unidecode(dataAsArray[i][22]), 
-                                "Zip": unidecode(dataAsArray[i][8]), 
+                                "Zip": dataAsArray[i][8], 
                                 "Ceeb": CeebDetermination(dataAsArray[i][25], dataAsArray[i][17]), 
                                 "StudentType": StudentTypeDetermination(dataAsArray[i][35]), 
                                 "AnticipatedStartTerm": startTerm, 
                                 "AnticipatedStartYear": startYear, 
                                 "CampusInquiry": CampusInquiryAssignment(dataAsArray[i][15])
                             })
-
-    #After everything else is done, move the files to the archives.
-    for file in os.listdir(dropbox + storageDir):
-        if file.endswith(".csv"):
-            shutil.move(str(dropbox + storageDir + file), str(archives + storageDir))
+                shutil.move(str(dropbox + storageDir + file), str(archives + storageDir))
 
 if __name__ == '__main__': main()
