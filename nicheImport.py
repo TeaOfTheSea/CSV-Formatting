@@ -121,6 +121,9 @@ def main():
                                 "AnticipatedStartYear": startYear, 
                                 "CampusInquiry": CampusInquiryAssignment(dataAsArray[i][15])
                             })
-                shutil.move(str(dropbox + storageDir + file), str(archives + storageDir))
+                try: #try moving the file and if that doesn't work (usually because the file exists again) try moving it and appending the unix timestamp to the title
+                    shutil.move(str(dropbox + storageDir + file), str(archives + storageDir))
+                except:
+                    shutil.move(str(dropbox + storageDir + file), str(archives + storageDir + str(datetime.timestamp(datetime.now())) + file))
 
 if __name__ == '__main__': main()
