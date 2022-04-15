@@ -59,10 +59,10 @@ def TermYearAssignment(collegeGradYear, highSchoolGradYear, transferEnrollmentDa
         else:
             return "Spring", dateAsObject.year + 1
     elif len(collegeGradYear) != 0: #If we don't have a transfer enrollment date, assume they want to start the next fall semester after they graduate college
-        if collegeGradYear > nextReasonableYear:
+        if int(collegeGradYear) > nextReasonableYear:
             return "Fall", collegeGradYear
         else: return "Fall", nextReasonableYear
-    elif len(highSchoolGradYear) != 0 and highSchoolGradYear > nextReasonableYear: #If we don't have a college enrollment date, assume they want to start the next fall semester after they graduate high school
+    elif len(highSchoolGradYear) != 0 and int(highSchoolGradYear) > nextReasonableYear: #If we don't have a college enrollment date, assume they want to start the next fall semester after they graduate high school
         return "Fall", highSchoolGradYear
     else: #If we don't have any data on when the student graduates, assume they want to start in the fall of the next reasonable year.
         return "Fall", nextReasonableYear
@@ -101,25 +101,25 @@ def main():
                     dataAsArray = list(csv.reader(csvFile))
                     # this grabs every i value for every row of the csv except 0, which is the header
                     for i in (n + 1 for n in range(len(dataAsArray) - 1)):
-                        if dataAsArray[i][35].lower() != "high school parent": #this is just so we don't write any data about high school parents.
-                            startTerm, startYear = TermYearAssignment(dataAsArray[i][19], dataAsArray[i][27], dataAsArray[i][41], todaysDate, nextReasonableYear)#Start term and year are being handled with a lot of the same logic, so we define both at once instead of one by one.
+                        if dataAsArray[i][18].lower() != "high school parent": #this is just so we don't write any data about high school parents.
+                            startTerm, startYear = TermYearAssignment(dataAsArray[i][39], dataAsArray[i][12], dataAsArray[i][35], todaysDate, nextReasonableYear)#Start term and year are being handled with a lot of the same logic, so we define both at once instead of one by one.
                             writer.writerow({
-                                "FirstName": unidecode(dataAsArray[i][4]),
-                                "LastName": unidecode(dataAsArray[i][5]), 
-                                "Email": dataAsArray[i][3], 
-                                "Phone": PhonenumberFormatting(dataAsArray[i][6]), 
-                                "Gender": GenderFormatting(dataAsArray[i][24]), 
-                                "Birthday": dataAsArray[i][1], 
-                                "Address": unidecode(str(dataAsArray[i][0] + " " + dataAsArray[i][14])), 
-                                "City": unidecode(dataAsArray[i][2]), 
+                                "FirstName": unidecode(dataAsArray[i][0]),
+                                "LastName": unidecode(dataAsArray[i][1]), 
+                                "Email": dataAsArray[i][2], 
+                                "Phone": PhonenumberFormatting(dataAsArray[i][3]), 
+                                "Gender": GenderFormatting(dataAsArray[i][10]), 
+                                "Birthday": dataAsArray[i][9], 
+                                "Address": unidecode(str(dataAsArray[i][4] + " " + dataAsArray[i][5])), 
+                                "City": unidecode(dataAsArray[i][6]), 
                                 "State": unidecode(dataAsArray[i][7]), 
-                                "Country": unidecode(dataAsArray[i][22]), 
+                                "Country": unidecode(dataAsArray[i][16]), 
                                 "Zip": dataAsArray[i][8], 
-                                "Ceeb": CeebDetermination(dataAsArray[i][25], dataAsArray[i][17]), 
-                                "StudentType": StudentTypeDetermination(dataAsArray[i][35]), 
+                                "Ceeb": CeebDetermination(dataAsArray[i][11], dataAsArray[i][37]), 
+                                "StudentType": StudentTypeDetermination(dataAsArray[i][18]), 
                                 "AnticipatedStartTerm": startTerm, 
                                 "AnticipatedStartYear": startYear, 
-                                "CampusInquiry": CampusInquiryAssignment(dataAsArray[i][15])
+                                "CampusInquiry": CampusInquiryAssignment(dataAsArray[i][42])
                             })
                 try: #try moving the file and if that doesn't work (usually because the file exists again) try moving it and appending the unix timestamp to the title
                     shutil.move(str(dropbox + storageDir + file), str(archives + storageDir))
