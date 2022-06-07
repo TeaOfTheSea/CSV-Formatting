@@ -96,7 +96,7 @@ def main():
             # for all the files in that directory, check if they are csv's
             if file.endswith(".csv"):
                 # open each csv
-                with open(dropbox + storageDir + file) as csvFile:
+                with open(dropbox + storageDir + file, 'r', encoding='utf-8') as csvFile:
                     # convert that data to an array for ease of iteration
                     dataAsArray = list(csv.reader(csvFile))
                     # this grabs every i value for every row of the csv except 0, which is the header
